@@ -1,5 +1,6 @@
 #include "header.h"
 
+//awal bagian person5 (melanie)
 void tampilData() {
 
     struct Kampus *k = headKampus;
@@ -37,9 +38,65 @@ void tampilData() {
 }
 
 void distribusiFrekuensi(struct Jurusan *j) {
+    int freq[11] = {0};
 
+    for (int i = 0; i < j->jumlahPeserta; i++) {
+
+        int index = j->data_kursi[i].nilai.rataRata / 100;
+
+        if (index > 10) {
+            index = 10;
+        }
+
+        freq[index]++;
+    }
+
+    printf("\nDistribusi Frekuensi Nilai\n");
+    printf("----------------------------------\n");
+
+    for (int i = 0; i <= 10; i++) {
+
+        int batasBawah = i * 100;
+        int batasAtas = batasBawah + 99;
+
+        printf("%3d - %3d : %d\n",
+            batasBawah,
+            batasAtas,
+            freq[i]);
+    }
 }
 
 void analisisDistribusiNilai(struct Jurusan *j) {
+    int freq[11] = {0};
 
+    for (int i = 0; i < j->jumlahPeserta; i++) {
+
+        int index = j->data_kursi[i].nilai.rataRata / 100;
+
+        if (index > 10) {
+            index = 10;
+        }
+
+        freq[index]++;
+    }
+
+    printf("\nHistogram Distribusi Nilai\n");
+    printf("====================================\n");
+
+    for (int i = 0; i <= 10; i++) {
+
+        int batasBawah = i * 100;
+        int batasAtas = batasBawah + 99;
+
+        printf("%3d - %3d : ",
+            batasBawah,
+            batasAtas);
+
+        for (int jml = 0; jml < freq[i]; jml++) {
+            printf("*");
+        }
+
+        printf(" (%d)\n", freq[i]);
+    }
 }
+//akhir bagian person5 (melanie)
