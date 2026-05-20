@@ -61,4 +61,8 @@ struct LogRiwayat {
 extern struct Kampus *headKampus;
 extern struct LogRiwayat *topStack;
 
+void tampilData();
+void distribusiFrekuensi(struct Jurusan *j);
+void analisisDistribusiNilai(struct Jurusan *j);
+
 #endif
