@@ -65,4 +65,9 @@ void tampilData();
 void distribusiFrekuensi(struct Jurusan *j);
 void analisisDistribusiNilai(struct Jurusan *j);
 
+struct Kampus* cariAtauBuatKampus(const char *namaKampus);
+struct Jurusan* cariAtauBuatJurusan(struct Kampus *kampusNode, const char *namaJurusan, int kuotaAwal);
+void hitungRataRata(struct NilaiSnbt *nilai);
+void insertPeserta(const char *namaKampus, const char *namaJurusan, int kuota, const char *namaPeserta, struct NilaiSnbt nilaiSubtes);
+
 #endif
