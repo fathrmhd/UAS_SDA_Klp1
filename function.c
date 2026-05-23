@@ -325,3 +325,82 @@ void hitungStatistikJurusan(struct Jurusan *j) {
 }
 
 //akhir bagian person3 (Dhawy)
+
+// AWAL BAGIAN PERSON 4 (Mustaqim)
+
+int binarySearch(struct Peserta arr[], int kiri, int kanan, float targetNilai) {
+    if (kanan >= kiri) {
+        int tengah = kiri + (kanan - kiri) / 2;
+
+        float selisih = arr[tengah].nilai.rataRata - targetNilai;
+        if (selisih < 0) selisih = -selisih;
+
+        if (selisih < 0.01) {
+            return tengah; // Ketemu
+        }
+
+        if (arr[tengah].nilai.rataRata > targetNilai) {
+            return binarySearch(arr, kiri, tengah - 1, targetNilai);
+        }
+
+        return binarySearch(arr, tengah + 1, kanan, targetNilai);
+    }
+    return -1; // Tidak ketemu
+}
+
+struct Kampus* cariKampus(const char *namaKampus) {
+    struct Kampus *k = headKampus;
+    while (k != NULL) {
+        if (strcmp(k->nama, namaKampus) == 0) {
+            return k; // Kampus ditemukan
+        }
+        k = k->next;
+    }
+    return NULL; // Kampus tidak ditemukan
+}
+
+struct Jurusan* cariJurusan(struct Kampus *kampusNode, const char *namaJurusan) {
+    if (kampusNode == NULL) return NULL;
+    
+    struct Jurusan *j = kampusNode->headerJurusan;
+    while (j != NULL) {
+        if (strcmp(j->nama, namaJurusan) == 0) {
+            return j; // Jurusan ditemukan
+        }
+        j = j->next;
+    }
+    return NULL; // Jurusan tidak ditemukan
+}
+
+void prediksiHasilUTBK(const char *namaKampus, const char *namaJurusan, float targetNilai) {
+    struct Kampus *k = cariKampus(namaKampus);
+    if (k == NULL) {
+        printf("Kampus %s tidak ditemukan dalam sistem.\n", namaKampus);
+        return;
+    }
+
+    struct Jurusan *j = cariJurusan(k, namaJurusan);
+    if (j == NULL) {
+        printf("Jurusan %s tidak ditemukan di kampus %s.\n", namaJurusan, namaKampus);
+        return;
+    }
+
+    printf("\n--- HASIL PREDIKSI UTBK ---\n");
+    printf("Kampus Tujuan : %s\n", k->nama);
+    printf("Jurusan Tujuan: %s\n", j->nama);
+    printf("Nilai Kamu    : %.2f\n", targetNilai);
+    printf("Batas Lulus   : %.2f\n", j->info_statistik.batas_lulus);
+
+    if (j->info_statistik.batas_lulus == 0.0f) {
+        printf("\nStatus: BELUM BISA DIPREDIKSI (Data pendaftar masih kosong atau belum dihitung)\n");
+    } else if (targetNilai >= j->info_statistik.batas_lulus) {
+        printf("\nStatus: PREDIKSI LULUS AMAN!\n");
+        printf("Nilaimu berada di atas batas aman jurusan ini.\n");
+    } else {
+        printf("\nStatus: PREDIKSI RAWAN / TIDAK LULUS\n");
+        printf("Nilaimu masih di bawah batas lulus. Tingkatkan belajarmu!\n");
+    }
+    printf("---------------------------\n");
+}
+
+// AKHIR BAGIAN PERSON 4 (Mustaqim)
