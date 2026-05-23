@@ -1,5 +1,4 @@
-#ifndef HEADER_H
-#define HEADER_H 
+//Person 1 (Febi)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,19 +6,11 @@
 
 // STRUCT NILAI 7 SUBTES
 struct NilaiSnbt {
-    float pu;
-    float pbm;
-    float ppu;
-    float pk;
-    float lbi;
-    float lbe;
-    float pm;
-    float rataRata;
+    float pu, pbm, ppu, pk, lbi, lbe, pm, rataRata;
 };
 
 // STRUCT PESERTA
 struct Peserta {
-    char nama[50];
     struct NilaiSnbt nilai;
 };
 
@@ -61,6 +52,10 @@ struct LogRiwayat {
 extern struct Kampus *headKampus;
 extern struct LogRiwayat *topStack;
 
+// VARIABEL untuk menyimpan log Nilai TO
+extern struct NilaiSnbt nilaiTOTerakhir;
+extern int nilaiTO;
+
 void tampilData();
 void distribusiFrekuensi(struct Jurusan *j);
 void analisisDistribusiNilai(struct Jurusan *j);
@@ -68,12 +63,19 @@ void analisisDistribusiNilai(struct Jurusan *j);
 struct Kampus* cariAtauBuatKampus(const char *namaKampus);
 struct Jurusan* cariAtauBuatJurusan(struct Kampus *kampusNode, const char *namaJurusan, int kuotaAwal);
 void hitungRataRata(struct NilaiSnbt *nilai);
-void insertPeserta(const char *namaKampus, const char *namaJurusan, int kuota, const char *namaPeserta, struct NilaiSnbt nilaiSubtes);
+void insertPeserta(const char *namaKampus, const char *namaJurusan, int kuota, struct NilaiSnbt nilaiSubtes);
 
-// person 4
-int binarySearch(struct Peserta arr[], int kiri, int kanan, float targetNilai);
+void merge(struct Peserta *arr, int kiri, int tengah, int kanan);
+void mergeSort(struct Peserta *arr, int kiri, int kanan);
+void hitungStatistikJurusan(struct Jurusan *j);
+
+int binarySearch(struct Peserta *arr, int kiri, int kanan, float targetNilai);
 struct Kampus* cariKampus(const char *namaKampus);
 struct Jurusan* cariJurusan(struct Kampus *kampusNode, const char *namaJurusan);
 void prediksiHasilUTBK(const char *namaKampus, const char *namaJurusan, float targetNilai);
 
-#endif
+void tampilDaftarKampus();
+void pushRiwayat(const char *Kampus, const char *Jurusan, float skor, const char *status);
+void tampil();
+void inputData();
+void freeMemori();
