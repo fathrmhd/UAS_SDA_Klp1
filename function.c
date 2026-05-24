@@ -20,12 +20,14 @@ struct Kampus* cariAtauBuatKampus(const char *namaKampus) {
     }
 
     struct Kampus *newKampus = (struct Kampus*)malloc(sizeof(struct Kampus));
+    if (newKampus == NULL) {
+        printf("[ERROR] Gagal alokasi memori untuk Kampus.\n");
+        return NULL;
+    }
     strcpy(newKampus->nama, namaKampus);
     newKampus->headerJurusan = NULL;
-
     newKampus->next = headKampus;
     headKampus = newKampus;
-    
     return newKampus;
 }
 
@@ -33,6 +35,7 @@ struct Jurusan* cariAtauBuatJurusan(struct Kampus *kampusNode, const char *namaJ
     if (kampusNode == NULL){
         return NULL;
     }
+    
     struct Jurusan *curr = kampusNode->headerJurusan;
 
     while (curr != NULL) {
@@ -43,15 +46,16 @@ struct Jurusan* cariAtauBuatJurusan(struct Kampus *kampusNode, const char *namaJ
     }
 
     struct Jurusan *newJurusan = (struct Jurusan*)malloc(sizeof(struct Jurusan));
+    if (newJurusan == NULL) {
+        printf("[ERROR] Gagal alokasi memori untuk Jurusan.\n");
+        return NULL;
+    }
     strcpy(newJurusan->nama, namaJurusan);
     newJurusan->kuota = kuotaAwal;
     newJurusan->jumlahPeserta = 0;
     memset(&newJurusan->info_statistik, 0, sizeof(struct Statistik));
-
-
     newJurusan->next = kampusNode->headerJurusan;
     kampusNode->headerJurusan = newJurusan;
-    
     return newJurusan;
 }
 
